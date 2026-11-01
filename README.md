@@ -45,6 +45,12 @@ Install dependencies:
 python -m pip install -r requirements.txt
 ```
 
+Migrate database:
+
+```powershell
+python -m app.migrate
+```
+
 Run from the repository root:
 
 ```powershell

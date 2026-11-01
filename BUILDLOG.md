@@ -26,3 +26,17 @@ Verification:
 - Ran the application locally.
 - Confirmed GET /health returns HTTP 200 and {"status":"ok"}.
 - Confirmed the endpoint appears in /docs.
+
+
+## Database connection and first migration
+
+AI assistance:
+- ChatGPT provided the connection helper, ideas on how to  
+  setup the schema, and helped with the migration runner.
+- Explained constraints, foreign keys, parameterized queries,
+  transactions, and migration history.
+
+Verification:
+- First migration run reported "applied".
+- Second run reported "skipped".
+- Confirmed plans, tenants, subscriptions, and schema_migrations exist.
