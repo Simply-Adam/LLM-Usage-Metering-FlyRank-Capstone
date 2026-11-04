@@ -40,3 +40,15 @@ Verification:
 - First migration run reported "applied".
 - Second run reported "skipped".
 - Confirmed plans, tenants, subscriptions, and schema_migrations exist.
+
+## Demo plans and tenants
+
+AI assistance:
+- ChatGPT provided the seed script and API-key hashing helper.
+- Explained secure key generation, hashing, conflict handling, and SQL joins.
+
+Verification:
+- Seeded Free and Pro plans and two Free demo tenants.
+- Repeated seeding; counts remained 2 plans, 2 tenants,
+  and 2 subscriptions.
+- Confirmed .env is ignored by Git.
