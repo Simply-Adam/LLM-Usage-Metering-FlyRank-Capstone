@@ -48,14 +48,13 @@ Important constraints and indexes:
 
 ## API
 | Method | Endpoint | Purpose |
-
 | GET    | /health  | Confirm the service is running |
 | POST   | /generate| Simulate an action and meter usage |
 | GET    | /usage   | Return monthly usage, limits, and costs |
 | POST   | /billing/checkout | Create a Stripe test Checkout session |
 | POST   | /webhooks/stripe  | Verify and queue Stripe events |
+| GET | /tenant | Return the authenticated tenant’s ID and name. Requires the `X-API-Key` header. |
 
-Tenant routes require an X-API-Key header.
 The server resolves the tenant from the key; clients cannot
 select another tenant by passing a tenant ID.
 The webhook uses Stripe signature verification instead.

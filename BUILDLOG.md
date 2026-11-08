@@ -52,3 +52,15 @@ Verification:
 - Repeated seeding; counts remained 2 plans, 2 tenants,
   and 2 subscriptions.
 - Confirmed .env is ignored by Git.
+
+## Tenant authentication
+
+AI assistance:
+- ChatGPT provided the protected router, and verification commands.
+- Explained API-key lookup, dependency injection, and tenant identity.
+
+Verification:
+- Missing and invalid keys returned 401.
+- Tenant A's key returned Tenant A.
+- Tenant B's key returned Tenant B.
+- A supplied tenant ID could not override the authenticated identity.
