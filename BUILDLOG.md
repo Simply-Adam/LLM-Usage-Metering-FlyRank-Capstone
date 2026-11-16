@@ -64,3 +64,15 @@ Verification:
 - Tenant A's key returned Tenant A.
 - Tenant B's key returned Tenant B.
 - A supplied tenant ID could not override the authenticated identity.
+
+
+## Usage-event schema and request validation
+
+AI assistance:
+- ChatGPT provided the request schema, and validation tests.
+- Explained tenant-scoped uniqueness, token-category relationships, strict validation, and unittest assertions.
+
+Verification:
+- Applied migration 002 and confirmed it is skipped on rerun.
+- Confirmed usage_events exists and initially contains zero rows.
+- Ran seven request-validation tests successfully.

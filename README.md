@@ -57,5 +57,12 @@ Run from the repository root:
 python -m uvicorn app.main:app --reload
 ```
 
+## Tests
+
+Run from the project root with the virtual environment active:
+
+```powershell
+python -m unittest discover -s tests -v
+```
 Health endpoint: http://127.0.0.1:8000/health
 API documentation: http://127.0.0.1:8000/docs

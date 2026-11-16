@@ -12,3 +12,6 @@ Test D: Tenant B
 
 Test E: Attempt to override the tenant
 ![Test E](evidenceIMG\image-4.png)
+
+Test F: Usage-Event Schema and Token Validation
+![Test F](evidenceIMG\image-5.png)
