@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routers import tenants
+from app.routers import generate, tenants
 
 
 app = FastAPI(
@@ -9,6 +9,7 @@ app = FastAPI(
 )
 
 app.include_router(tenants.router)
+app.include_router(generate.router)
 
 
 @app.get("/health")

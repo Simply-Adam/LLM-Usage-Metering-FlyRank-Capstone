@@ -15,3 +15,7 @@ Test E: Attempt to override the tenant
 
 Test F: Usage-Event Schema and Token Validation
 ![Test F](evidenceIMG\image-5.png)
+
+Test G: Metering tests
+![Test G](evidenceIMG\image-6.png)
+

@@ -76,3 +76,20 @@ Verification:
 - Applied migration 002 and confirmed it is skipped on rerun.
 - Confirmed usage_events exists and initially contains zero rows.
 - Ran seven request-validation tests successfully.
+
+
+## Metering and quota enforcement
+
+AI assistance:
+- ChatGPT provided the usage repository and integration tests.
+- Explained transactions, request hashing, response replay,
+  UTC usage periods, and concurrent-request testing.
+
+Verification:
+- All 16 tests passed.
+- Retrying a successful request returned the original response
+  and created exactly one event.
+- Changed payloads returned 409.
+- Exact quota boundaries succeeded; requests above them returned 429.
+- Inactive subscriptions returned 402.
+- Concurrent requests respected quotas and duplicate prevention.
