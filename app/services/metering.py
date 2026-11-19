@@ -1,6 +1,7 @@
 import hashlib
 import json
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
+from app.periods import month_bounds, utc_string
 from uuid import uuid4
 
 from app.database import get_connection
@@ -12,10 +13,6 @@ class MeteringError(Exception):
         super().__init__(message)
         self.code = code
         self.detail = {"message": message, **context}
-
-
-def utc_string(value):
-    return value.isoformat(timespec="milliseconds").replace("+00:00", "Z")
 
 
 def record_usage(tenant_id, request, idempotency_key, now=None):
@@ -44,13 +41,7 @@ def record_usage(tenant_id, request, idempotency_key, now=None):
             return existing["response_status"], body
 
         now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
-
-        start = now.replace(
-            day=1, hour=0, minute=0, second=0, microsecond=0
-        )
-        end = (start + timedelta(days=32)).replace(day=1)
-
-        start_text, end_text = utc_string(start), utc_string(end)
+        start_text, end_text = month_bounds(now)
 
         subscription = usage_repository.get_subscription(
             connection, tenant_id

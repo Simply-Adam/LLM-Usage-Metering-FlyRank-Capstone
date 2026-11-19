@@ -50,10 +50,10 @@ Important constraints and indexes:
 | Method | Endpoint | Purpose |
 | GET    | /health  | Confirm the service is running |
 | POST   | /generate| Simulate an action and meter usage |
-| GET    | /usage   | Return monthly usage, limits, and costs |
+| GET    | /usage | Return current monthly usage, limits, and remaining allowance. Requires `X-API-Key`. |
 | POST   | /billing/checkout | Create a Stripe test Checkout session |
 | POST   | /webhooks/stripe  | Verify and queue Stripe events |
-| GET | /tenant | Return the authenticated tenant’s ID and name. Requires the `X-API-Key` header. |
+| GET    | /tenant | Return the authenticated tenant’s ID and name. Requires the `X-API-Key` header. |
 
 The server resolves the tenant from the key; clients cannot
 select another tenant by passing a tenant ID.

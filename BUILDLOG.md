@@ -93,3 +93,19 @@ Verification:
 - Exact quota boundaries succeeded; requests above them returned 429.
 - Inactive subscriptions returned 402.
 - Concurrent requests respected quotas and duplicate prevention.
+
+
+## Monthly usage summary
+
+AI assistance:
+- ChatGPT provided the shared UTC-period helper, usage-summary
+  service, router, and tests.
+- Explained consistent read transactions, remaining allowances,
+  and monthly boundary checks.
+
+Verification:
+- All 26 tests passed.
+- Verified authenticated monthly totals and remaining allowances.
+- Verified tenant isolation and UTC month boundaries.
+- Verified changed plan limits in a temporary database.
+- Confirmed reading usage creates no billable events.

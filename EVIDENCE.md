@@ -19,3 +19,5 @@ Test F: Usage-Event Schema and Token Validation
 Test G: Metering tests
 ![Test G](evidenceIMG\image-6.png)
 
+Test H: Monthly usage test
+![Test H](evidenceIMG\image-7.png)
