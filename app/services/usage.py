@@ -2,6 +2,7 @@ from app.database import get_connection
 from app.periods import month_bounds
 from app.repositories import usage_repository
 from app.services.metering import MeteringError
+from app.services.pricing import calculate_cost
 
 
 def get_usage_summary(tenant_id, now=None):
@@ -34,7 +35,15 @@ def get_usage_summary(tenant_id, now=None):
             "api_calls": subscription["api_call_limit"],
             "tokens": subscription["token_limit"],
         }
-
+        
+        cost = calculate_cost(
+            api_calls=totals["api_calls"],
+            input_tokens=totals["input_tokens"],
+            cached_input_tokens=totals["cached_input_tokens"],
+            output_tokens=totals["output_tokens"],
+            reasoning_tokens=totals["reasoning_tokens"],
+        )
+        
         result = {
             "tenant_id": tenant_id,
             "plan": subscription["plan_name"],
@@ -49,6 +58,7 @@ def get_usage_summary(tenant_id, now=None):
                 resource: max(0, limits[resource] - used[resource])
                 for resource in limits
             },
+            "cost": cost,
         }
 
         connection.execute("COMMIT")

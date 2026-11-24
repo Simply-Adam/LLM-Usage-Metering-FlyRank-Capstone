@@ -1,3 +1,4 @@
+import json
 import io
 import tempfile
 import unittest
@@ -241,4 +242,52 @@ class MeteringTests(unittest.TestCase):
         )
 
         self.assertEqual(responses[0].content, responses[1].content)
+        self.assertEqual(self.count_events(), 1)
+        
+    
+    def test_cost_is_saved_and_replayed(self):
+        first = self.generate("cost-retry")
+        second = self.generate("cost-retry")
+
+        self.assertEqual(first.status_code, 200)
+        self.assertEqual(second.status_code, 200)
+        self.assertEqual(first.content, second.content)
+        self.assertEqual(
+            first.json()["cost"]["total_micros"],
+            4300,
+        )
+
+        row = self.db(
+            """
+            SELECT response_body
+            FROM usage_events
+            WHERE tenant_id = 1
+            """
+        )[0]
+
+        saved = json.loads(row["response_body"])
+
+        self.assertEqual(saved["cost"], first.json()["cost"])
+        self.assertEqual(self.count_events(), 1)
+
+    def test_older_responses_are_replayed_unchanged(self):
+        first = self.generate("old-response")
+        self.assertEqual(first.status_code, 200)
+
+        old_body = first.json()
+        del old_body["cost"]
+
+        self.db(
+            """
+            UPDATE usage_events
+            SET response_body = ?
+            WHERE tenant_id = ? AND idempotency_key = ?
+            """,
+            (json.dumps(old_body), 1, "old-response"),
+        )
+
+        replay = self.generate("old-response")
+
+        self.assertEqual(replay.status_code, 200)
+        self.assertEqual(replay.json(), old_body)
         self.assertEqual(self.count_events(), 1)

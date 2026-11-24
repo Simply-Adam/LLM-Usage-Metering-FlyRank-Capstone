@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from app.periods import month_bounds, utc_string
 from uuid import uuid4
 
+from app.services.pricing import calculate_cost
 from app.database import get_connection
 from app.repositories import usage_repository
 
@@ -89,6 +90,7 @@ def record_usage(tenant_id, request, idempotency_key, now=None):
                 **payload,
                 "total_tokens": total_tokens,
             },
+            "cost": calculate_cost(api_calls=1, **payload),
         }
 
         event = {

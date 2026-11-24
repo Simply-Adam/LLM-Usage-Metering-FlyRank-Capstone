@@ -21,3 +21,9 @@ Test G: Metering tests
 
 Test H: Monthly usage test
 ![Test H](evidenceIMG\image-7.png)
+
+Test I: Correct Cached and Reasoning Token Costs
+![Test I](evidenceIMG\image-8.png)
+
+Test J: Monthly Cost Rollup
+![Test J](evidenceIMG\image-9.png)

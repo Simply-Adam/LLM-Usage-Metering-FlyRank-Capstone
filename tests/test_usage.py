@@ -268,3 +268,54 @@ class UsageTests(unittest.TestCase):
 
         self.assertEqual(data["used"]["tokens"], 1300)
         self.assertEqual(data["remaining"]["tokens"], 0)
+        
+    
+    def test_empty_usage_has_zero_cost(self):
+        cost = self.summary().json()["cost"]
+
+        self.assertEqual(cost["kind"], "usage_estimate")
+        self.assertEqual(cost["currency"], "USD")
+        self.assertEqual(cost["pricing_version"], "demo-v1")
+        self.assertEqual(cost["total_micros"], 0)
+        self.assertEqual(cost["total_usd"], "0.000000")
+
+    def test_monthly_cost_rollup(self):
+        self.record(key="cost-1")
+        self.record(key="cost-2")
+
+        self.record(
+            key="previous-month",
+            when=datetime(2029, 12, 31, tzinfo=timezone.utc),
+        )
+
+        data = self.summary().json()
+
+        self.assertEqual(data["used"], {
+            "api_calls": 2,
+            "tokens": 2600,
+        })
+        self.assertEqual(
+            data["cost"]["total_micros"],
+            8600,
+        )
+        self.assertEqual(
+            data["cost"]["total_usd"],
+            "0.008600",
+        )
+
+    def test_costs_are_isolated_and_reads_add_no_cost(self):
+        self.record()
+
+        first = self.summary().json()
+        second = self.summary().json()
+        other = self.summary(TEST_B).json()
+
+        self.assertEqual(first["cost"], second["cost"])
+        self.assertEqual(first["cost"]["total_micros"], 4300)
+        self.assertEqual(other["tenant_id"], 2)
+        self.assertEqual(other["cost"]["total_micros"], 0)
+
+        self.assertEqual(
+            self.db("SELECT COUNT(*) FROM usage_events")[0][0],
+            1,
+        )

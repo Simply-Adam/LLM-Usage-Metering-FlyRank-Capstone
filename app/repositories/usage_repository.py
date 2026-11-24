@@ -26,7 +26,11 @@ def get_usage(connection, tenant_id, start, end):
     return connection.execute(
         """
         SELECT COALESCE(SUM(api_calls), 0) AS api_calls,
-               COALESCE(SUM(input_tokens + output_tokens), 0) AS tokens
+               COALESCE(SUM(input_tokens + output_tokens), 0) AS tokens,
+               COALESCE(SUM(input_tokens), 0) AS input_tokens,
+               COALESCE(SUM(cached_input_tokens), 0) AS cached_input_tokens,
+               COALESCE(SUM(output_tokens), 0) AS output_tokens,
+               COALESCE(SUM(reasoning_tokens), 0) AS reasoning_tokens
         FROM usage_events
         WHERE tenant_id = ?
           AND created_at >= ?

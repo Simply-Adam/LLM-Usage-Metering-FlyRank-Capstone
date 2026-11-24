@@ -109,3 +109,17 @@ Verification:
 - Verified tenant isolation and UTC month boundaries.
 - Verified changed plan limits in a temporary database.
 - Confirmed reading usage creates no billable events.
+
+## Exact usage-cost calculations
+
+AI assistance:
+- ChatGPT provided integer-based calculations, and pricing tests.
+- Explained microdollars, cached-input pricing, reasoning-token
+  inclusion, and exact dollar-string formatting.
+
+Verification:
+- All 43 tests passed.
+- Sample usage cost exactly 4300 microdollars ($0.004300).
+- Verified monthly aggregation and tenant isolation.
+- Verified saved-response replay, including older responses.
+- Confirmed money amounts use integers.
