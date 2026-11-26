@@ -7,11 +7,13 @@ def find_event(connection, tenant_id, key):
         """,
         (tenant_id, key),
     ).fetchone()
-
+    
 def get_subscription(connection, tenant_id):
     return connection.execute(
         """
         SELECT subscriptions.status,
+               subscriptions.stripe_customer_id,
+               subscriptions.stripe_subscription_id,
                plans.name AS plan_name,
                plans.api_call_limit,
                plans.token_limit

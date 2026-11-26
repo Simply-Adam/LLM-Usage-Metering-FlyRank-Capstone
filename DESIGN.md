@@ -54,6 +54,7 @@ Important constraints and indexes:
 | POST   | /billing/checkout | Create a Stripe test Checkout session |
 | POST   | /webhooks/stripe  | Verify and queue Stripe events |
 | GET    | /tenant | Return the authenticated tenant’s ID and name. Requires the `X-API-Key` header. |
+| POST   | `/billing/checkout` | Create a Stripe sandbox Checkout session for Pro. Requires `X-API-Key` and `Idempotency-Key`. |
 
 The server resolves the tenant from the key; clients cannot
 select another tenant by passing a tenant ID.

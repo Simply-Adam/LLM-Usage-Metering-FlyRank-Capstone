@@ -123,3 +123,16 @@ Verification:
 - Verified monthly aggregation and tenant isolation.
 - Verified saved-response replay, including older responses.
 - Confirmed money amounts use integers.
+
+## Stripe sandbox Checkout
+
+AI assistance:
+- ChatGPT helped implement the authenticated Checkout endpoint for the Pro plan.
+- Explained how the backend selects the recurring Price, links a Checkout
+  session to a tenant, and uses an idempotency key to retry safely.
+- Helped add server-side logging to diagnose Stripe errors without exposing
+  API keys to the client.
+
+Verification:
+- Confirmed tenant authentication worked and the Checkout request reached Stripe.
+- The Uvicorn log showed that Stripe rejected the `payment_method_types` parameter.
